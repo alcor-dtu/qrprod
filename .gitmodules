@@ -1,0 +1,6 @@
+[submodule "scripts/ray_engine"]
+	path = scripts/ray_engine
+	url = https://github.com/alcor-dtu/ray_engine.git
+[submodule "scripts/eigen-git-mirror"]
+	path = scripts/eigen-git-mirror
+	url = https://github.com/eigenteam/eigen-git-mirror
