@@ -1,6 +1,9 @@
 from renderer_utils import *
 from qr_generator import create_qr_code_image
 
+start_renderer()
+exit()
+
 scene = Scene("tt.xml")
 scene.set_camera_eye([-4.,-4.,4.])
 scene.set_camera_lookat([0.,0.,0.])

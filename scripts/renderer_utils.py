@@ -31,6 +31,8 @@ def start_renderer(scene=None, output=None, frames=None, time=None, no_display=F
     if no_display:
         command += ["--no-display"]
     subprocess.call(command)
-    numpy_data = read_raw(output)
+    numpy_data = None
+    if frames is not None or time is not None:
+        numpy_data = read_raw(output)
     os.chdir(old)
     return numpy_data
