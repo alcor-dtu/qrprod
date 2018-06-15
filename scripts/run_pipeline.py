@@ -4,7 +4,7 @@ from qr_generator import create_qr_code_image
 start_renderer()
 exit()
 
-scene = Scene("tt.xml")
+scene = Scene("../data/template_scene.xml")
 scene.set_camera_eye([-4.,-4.,4.])
 scene.set_camera_lookat([0.,0.,0.])
 scene.set_camera_up([0., -1., 0.])

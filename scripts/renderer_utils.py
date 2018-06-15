@@ -2,6 +2,7 @@ import sys
 import os
 from raw_utils import read_raw
 import subprocess
+from scene import *
 
 def get_renderer_folder():
     return "./build/renderer/Release/"
