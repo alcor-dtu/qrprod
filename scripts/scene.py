@@ -2,14 +2,14 @@ import xml.etree.cElementTree as ET
 import pdb
 import subprocess
 import shutil
-
+import os
 def get_binary_file(scene_file):
     return scene_file[:-4] + "_binary.xml"
 
 class Scene:
     def __init__(self, scene_file):
          self.tree = ET.ElementTree(file = scene_file)
-         self.binary_file = get_binary_file(scene_file)
+         self.binary_file = os.path.abspath(get_binary_file(scene_file))
 
 ###########################################
 #            CAMERA MANIPULATION          #
