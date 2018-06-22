@@ -1,4 +1,5 @@
 from renderer_utils import *
+from raw_utils import *
 from qr_generator import create_qr_code_image
 import os
 print(os.getcwd())
@@ -25,4 +26,6 @@ print(scene.get_camera_lookat())
 print(scene.get_camera_up())
 print(scene.get_fov())
 print(scene.get_screen_dimensions())
-start_renderer(scene)
+img = start_renderer(scene, time = 1.0)
+
+save_png("test.png", img)
