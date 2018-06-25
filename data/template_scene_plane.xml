@@ -22,7 +22,7 @@
 										<dimensionality>2</dimensionality>
 										<format>6</format>
 										<element_size>4</element_size>
-										<texture>15510443317645313591</texture>
+										<texture>17834983385363737535</texture>
 									</data>
 								</ptr_wrapper>
 							</texture>
@@ -59,17 +59,15 @@
 							<data>
 								<name>camera_0</name>
 								<parameters>
-									<hfov>52.999996185302734</hfov>
+									<hfov>53</hfov>
 									<vfov>53</vfov>
-									<width>512</width>
-									<height>512</height>
 									<downsampling>1</downsampling>
 									<ratio_mode>0</ratio_mode>
 								</parameters>
 								<eye>
-									<x>-0.89890450239181519</x>
-									<y>-1.6066185235977173</y>
-									<z>3.6443381309509277</z>
+									<x>0.71418100595474243</x>
+									<y>2.6725926399230957</y>
+									<z>2.9502139091491699</z>
 								</eye>
 								<lookat>
 									<x>0</x>
@@ -77,9 +75,9 @@
 									<z>0</z>
 								</lookat>
 								<up>
-									<x>-0.1776251494884491</x>
-									<y>-0.88355851173400879</y>
-									<z>-0.43332868814468384</z>
+									<x>-0.075393833220005035</x>
+									<y>0.7480207085609436</y>
+									<z>-0.65937906503677368</z>
 								</up>
 							</data>
 						</ptr_wrapper>
@@ -175,11 +173,12 @@
 												<material_data>
 													<illum>2</illum>
 													<index_of_refraction>
-														<x>1</x>
-														<y>1</y>
-														<z>1</z>
+														<x>1.2999999523162842</x>
+														<y>1.2999999523162842</y>
+														<z>1.2999999523162842</z>
 													</index_of_refraction>
-													<roughness>0</roughness>
+													<roughness>1</roughness>
+													<anisotropy_angle>0</anisotropy_angle>
 												</material_data>
 												<scattering_material>
 													<ptr_wrapper>
@@ -187,19 +186,19 @@
 														<data>
 															<scale>1</scale>
 															<scattering>
+																<x>1</x>
+																<y>0.029999999329447746</y>
+																<z>2</z>
+															</scattering>
+															<asymmetry>
 																<x>0</x>
 																<y>0</y>
 																<z>0</z>
-															</scattering>
-															<asymmetry>
-																<x>1</x>
-																<y>1</y>
-																<z>1</z>
 															</asymmetry>
 															<absorption>
-																<x>1</x>
-																<y>1</y>
-																<z>1</z>
+																<x>0.029999999329447746</x>
+																<y>0.029999999329447746</y>
+																<z>0.029999999329447746</z>
 															</absorption>
 														</data>
 													</ptr_wrapper>
@@ -252,30 +251,8 @@
 														</ptr_wrapper>
 													</value2>
 												</textures>
-												<shader>
-													<polymorphic_id>2147483652</polymorphic_id>
-													<polymorphic_name>BRDFShader</polymorphic_name>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<cereal_class_version>0</cereal_class_version>
-															<class>
-																<name>BRDF</name>
-																<shader_path>brdf_shader.cu</shader_path>
-																<illum>2</illum>
-															</class>
-															<brdf>
-																<polymorphic_id>1073741824</polymorphic_id>
-																<ptr_wrapper>
-																	<valid>1</valid>
-																	<data>
-																		<type>GGX</type>
-																	</data>
-																</ptr_wrapper>
-															</brdf>
-														</data>
-													</ptr_wrapper>
-												</shader>
+                                                <shader_type>illum</shader_type>
+												<shader>2</shader>
 											</data>
 										</ptr_wrapper>
 									</value0>
@@ -291,7 +268,8 @@
 														<y>1</y>
 														<z>1</z>
 													</index_of_refraction>
-													<roughness>0.05000000074505806</roughness>
+													<roughness>0.81649661064147949</roughness>
+													<anisotropy_angle>0</anisotropy_angle>
 												</material_data>
 												<scattering_material>
 													<ptr_wrapper>
@@ -364,25 +342,18 @@
 														</ptr_wrapper>
 													</value2>
 												</textures>
+                                                <shader_type>extended</shader_type>
 												<shader>
-													<polymorphic_id>4</polymorphic_id>
+													<polymorphic_id>2147483653</polymorphic_id>
+													<polymorphic_name>DefaultShader</polymorphic_name>
 													<ptr_wrapper>
 														<valid>1</valid>
 														<data>
-															<class>
-																<name>BRDF</name>
-																<shader_path>brdf_shader.cu</shader_path>
-																<illum>2</illum>
-															</class>
-															<brdf>
-																<polymorphic_id>1073741824</polymorphic_id>
-																<ptr_wrapper>
-																	<valid>1</valid>
-																	<data>
-																		<type>GGX</type>
-																	</data>
-																</ptr_wrapper>
-															</brdf>
+															<value0>
+																<name>Constant</name>
+																<shader_path>constant_shader.cu</shader_path>
+																<illum>0</illum>
+															</value0>
 														</data>
 													</ptr_wrapper>
 												</shader>
@@ -395,13 +366,13 @@
 										<valid>1</valid>
 										<data>
 											<mode>raw</mode>
-											<width>900</width>
-											<height>450</height>
+											<width>16</width>
+											<height>16</height>
 											<depth>1</depth>
 											<dimensionality>2</dimensionality>
 											<format>6</format>
 											<element_size>4</element_size>
-											<texture>15510443317645313591</texture>
+											<texture>10331568816612273572</texture>
 										</data>
 									</ptr_wrapper>
 								</material_selector>

@@ -76,17 +76,6 @@ class Scene:
         node = self._get_main_camera_node()
         n = self.tree.getroot().findall('.//vfov')[0]
         n.text = str(new_elem) 
-
-    def get_screen_dimensions(self):
-        node = self._get_main_camera_node()
-        n = self.tree.getroot().findall('.//parameters')[0]
-        return [n.find("width").text, n.find("height").text]
-
-    def set_screen_dimensions(self, width, height):
-        node = self._get_main_camera_node()
-        n = self.tree.getroot().findall('.//parameters')[0]
-        n.find("width").text = str(width)
-        n.find("height").text = str(height)
     
 ###########################################
 #          MATERIAL MANIPULATION          #
@@ -101,6 +90,17 @@ class Scene:
         f.text = new_filename
         data.append(mode)
         data.append(f)
+        
+    def _set_texture_as_color(self, texture_node, color):
+        ptr = texture_node.findall('.//ptr_wrapper')[0]
+        data = ptr.find("data")
+        data.clear()
+        mode = ET.Element("mode")
+        mode.text = "color"        
+        vec = self._create_vector("color", color)
+        data.append(mode)
+        data.append(vec)
+        
 
     def _get_array_element(self, parent_node, array_name, requested_index):
         m = parent_node.findall('.//' + array_name)
@@ -133,14 +133,7 @@ class Scene:
     # Color must be a list with 4 elements in the 0,1 range
     def _set_material_color(self, mesh_index, material_index, texture_index, color):
         texture = self._get_texture_node(mesh_index, material_index, texture_index)
-        ptr = texture.findall('.//ptr_wrapper')[0]
-        data = ptr.find("data")
-        data.clear()
-        mode = ET.Element("mode")
-        mode.text = "color"        
-        vec = self._create_vector("color", color)
-        data.append(mode)
-        data.append(vec)
+        self._set_texture_as_color(texture, color)
             
     def set_material_ambient_color(self, mesh_index, material_index, color):
         self._set_material_color(mesh_index, material_index, 0, color)
@@ -197,6 +190,13 @@ class Scene:
         assert(poly_name.text == "EnvironmentMap")
         tex = miss_program.findall(".//texture")[0]
         self._set_texture_as_file(tex, texture_filename)
+        
+    def set_environment_map_as_color(self, color):
+        miss_program = self.tree.getroot().findall('.//miss_program')[0]
+        poly_name = miss_program.find("polymorphic_name")
+        assert(poly_name.text == "EnvironmentMap")
+        tex = miss_program.findall(".//texture")[0]
+        self._set_texture_as_color(tex, color)
 
     def dump(self, scene_file):
         self.tree.write(scene_file)

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cereal>
+	<data_folder>./</data_folder>
+	<ptx_folder>PTX_files</ptx_folder>
+	<renderer_parameters>
+		<screen_width>512</screen_width>
+		<screen_height>512</screen_height>
+		<print_buffer_size>2000</print_buffer_size>
+		<print_index>
+			<x>407</x>
+			<y>56</y>
+		</print_index>
+		<debug_enabled>false</debug_enabled>
+		<stack_size>30000</stack_size>
+		<exception_color>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</exception_color>
+		<max_depth>10</max_depth>
+		<scene_epsilon_fraction>9.9999997473787516e-05</scene_epsilon_fraction>
+		<use_auto_camera>true</use_auto_camera>
+	</renderer_parameters>
+	<tonemap_parameters>
+		<exponent>1.7999999523162842</exponent>
+		<multiplier>1</multiplier>
+	</tonemap_parameters>
+</cereal>
+
