@@ -2,6 +2,8 @@ from renderer_utils import *
 from ray_tracing_parameters import *
 from raw_utils import *
 from qr_utils import create_qr_code_image, decode_qr_code_image
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 
@@ -21,6 +23,12 @@ def rotate_to_normal(normal, v):
     b = -normal[0]*normal[1]*a
     vv = np.array((1.0 - normal[0]*normal[0]*a, b, -normal[0])) * v[0] + np.array((b, 1.0 - normal[1]*normal[1]*a, -normal[1]))*v[1] + np.array(normal) * v[2]
     return vv
+    
+def normalize(v):
+    norm = np.linalg.norm(v)
+    if(norm == 0.0):
+        return v
+    return v / norm
 
 def simulate_scene(scene, ray_parameters, destination_folder, time_per_frame):
     theta_subdiv = 25
@@ -41,22 +49,26 @@ def simulate_scene(scene, ray_parameters, destination_folder, time_per_frame):
             pos = pos * radius
             positions.append(pos)
             pos = rotate_to_normal([0,1,0], pos)
-            print(pos)
             pos = pos.tolist()
             scene.set_camera_eye(pos)
+
+            current_up = np.array([0,1,0])
+            if(np.dot(current_up, normalize(pos)) > 0.999):
+                current_up = np.array([1,0,0])
+
+            scene.set_camera_up(current_up.tolist())
             dest_path = os.path.join(destination_folder, unique_name)
             if not os.path.exists(dest_path):
                 start_renderer(scene, ray_parameters, time=time_per_frame, output="image.png")
                 image_path = os.path.join(get_renderer_folder(),"image.png")
                 shutil.copyfile(image_path, dest_path)
             success, text = decode_qr_code_image(dest_path)
+            print("Position %.2f %.2f %.2f")
             pass_test.append(success)
             
     positions = np.array(positions)   
     pass_test = np.array(pass_test)     
 
-    from mpl_toolkits.mplot3d import Axes3D
-    import matplotlib.pyplot as plt
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(positions[pass_test,0], positions[pass_test,1], positions[pass_test,2], c='g', s=100)
@@ -64,11 +76,14 @@ def simulate_scene(scene, ray_parameters, destination_folder, time_per_frame):
     ax.set_xlim([-radius, radius])
     ax.set_ylim([-radius, radius])
     ax.set_zlim([0, radius])
-    
+    ax.set_xlabel('X axis')
+    ax.set_ylabel('Y axis')
+    ax.set_zlabel('Z axis')
+    ax.set_aspect('equal')
     
 scene = Scene("../data/qr_code_only_scene.xml")
 scene.set_camera_lookat([0.,0.,0.])
-scene.set_camera_up([1., 1.1, 0.])
+
 scene.set_material_diffuse_color(0,0, [0,0,0,0])
 scene.set_material_diffuse_color(0,1, [1,1,1,1])
 create_qr_code_image("Hello world!", os.path.join(get_renderer_folder(),"qr_code.png"))
@@ -77,6 +92,7 @@ scene.set_material_selector_texture(0, "qr_code.png")
 ray_parameters = RayEngineParameters("../data/ray_tracing_parameters.xml", screen_width = 1024, screen_height = 1024)
 
 simulate_scene(scene, ray_parameters, "../results/results_bw", 1.0)
+plt.title("Black and white image")
 
 scene_constant = Scene("../data/qr_code_ridged_scene.xml")
 scene_constant.set_camera_lookat([0.,0.,0.])
@@ -90,6 +106,7 @@ scene_constant.set_environment_map_as_color([0.7,0.7,0.7,1.0])
 scene_constant.set_material_selector_texture(0, "qr_code.png")
 
 simulate_scene(scene_constant, ray_parameters, "../results/results_ridged_constant", 1.0)
+plt.title("Constant background")
 
 scene_full = Scene("../data/qr_code_ridged_scene.xml")
 scene_full.set_camera_lookat([0.,0.,0.])
@@ -102,4 +119,6 @@ create_qr_code_image("Hello world!", os.path.join(get_renderer_folder(),"qr_code
 scene_full.set_environment_map(os.path.abspath("../data/envmap_test.png"))
 scene_full.set_material_selector_texture(0, "qr_code.png")
 
-simulate_scene(scene_full, ray_parameters, "../results/results_ridged", 1.0)
+simulate_scene(scene_full, ray_parameters, "../results/results_ridged", 3.0)
+plt.title("Environment map")
+plt.show()
